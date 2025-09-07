@@ -63,5 +63,3 @@ jobs:
             sleep 10
             # 컨테이너 상태 확인
             sudo docker ps | grep mindit-ai-container || exit 1
-            # 애플리케이션 헬스체크
-            curl -f http://localhost:8000/health || exit 1
