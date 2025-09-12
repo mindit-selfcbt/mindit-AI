@@ -66,3 +66,6 @@ jobs:
             sleep 10
             # 컨테이너 상태 확인
             sudo docker ps | grep mindit-ai-container || exit 1
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
