@@ -1,4 +1,5 @@
 import uuid
+import json
 from typing import List, Dict, Any
 from langchain_openai import ChatOpenAI
 from langchain.schema import HumanMessage, SystemMessage
@@ -20,6 +21,22 @@ class ChatbotService:
             model=settings.OPENAI_MODEL,
             temperature=0.7
         )
+    
+    def _stringify_message_content(self, content: Any) -> str:
+        """
+        Normalize arbitrary message content into a readable string.
+        - Lists are joined with ", ".
+        - Dicts are JSON-encoded with ensure_ascii=False.
+        - Others are coerced via str().
+        """
+        try:
+            if isinstance(content, list):
+                return ", ".join(str(item) for item in content)
+            if isinstance(content, dict):
+                return json.dumps(content, ensure_ascii=False)
+            return str(content)
+        except Exception:
+            return str(content)
     
     def generate_obsession_question(self, user_text: str) -> Dict[str, Any]:
         """
@@ -132,7 +149,8 @@ class ChatbotService:
         user_messages = []
         for msg in conversation_history:
             if msg.get("role") == "user":
-                user_messages.append(msg.get("content", ""))
+                content = msg.get("content", "")
+                user_messages.append(self._stringify_message_content(content))
         
         # 최근 사용자 메시지들을 하나의 텍스트로 결합
         recent_context = " ".join(user_messages[-3:])  # 최근 3개 메시지만 사용
@@ -183,7 +201,8 @@ class ChatbotService:
         user_messages = []
         for msg in conversation_history:
             if msg.get("role") == "user":
-                user_messages.append(msg.get("content", ""))
+                content = msg.get("content", "")
+                user_messages.append(self._stringify_message_content(content))
         
         # 최근 사용자 메시지들을 하나의 텍스트로 결합
         recent_context = " ".join(user_messages[-5:])  # 최근 5개 메시지 사용
