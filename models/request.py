@@ -38,3 +38,29 @@ class ObsessionAnalysis3Response(BaseModel):
     user_pattern_summary: str  #사용자 패턴 요약
     question: str  #고정형 질문
     thought_examples: List[str]  #생각 예시 3개
+
+class ObsessionAnalysis4Request(BaseModel):
+    conversation_history: List[Dict[str, Any]]
+    session_id: str
+
+class ObsessionAnalysis4Response(BaseModel):
+    session_id: str
+    user_pattern_summary: str
+    category_message: str
+    encouragement: str
+
+class ObsessionAnalysis5Request(BaseModel):
+    conversation_history: List[Dict[str, Any]]
+    session_id: str
+
+class ObsessionAnalysis5Response(BaseModel):
+    session_id: str
+    response: str
+
+class ObsessionAnalysis6Request(BaseModel):
+    conversation_history: List[Dict[str, Any]]
+    session_id: str
+
+class ObsessionAnalysis6Response(BaseModel):
+    session_id: str
+    response: str
