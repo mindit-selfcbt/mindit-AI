@@ -64,3 +64,82 @@ class ObsessionAnalysis6Request(BaseModel):
 class ObsessionAnalysis6Response(BaseModel):
     session_id: str
     response: str
+
+
+class ObsessionAnalysis7Request(BaseModel):
+    conversation_history: List[Dict[str, Any]]
+    session_id: str
+
+class ObsessionAnalysis7Response(BaseModel):
+    session_id: str
+    intro_message: str
+    question: str
+    situations: List[str]
+
+class ObsessionAnalysis8Request(BaseModel):
+    conversation_history: List[Dict[str, Any]]
+    session_id: str
+
+class ObsessionAnalysis8Response(BaseModel):
+    session_id: str
+    response: str
+
+class ObsessionAnalysis9Request(BaseModel):
+    conversation_history: List[Dict[str, Any]]
+    session_id: str
+
+class AnxietyHierarchyItem(BaseModel):
+    order: int
+    situation: str
+    score: int
+
+class ObsessionAnalysis9Response(BaseModel):
+    session_id: str
+    intro_message: str
+    anxiety_hierarchy: List[AnxietyHierarchyItem]
+    practice_message: str
+    example_message: str
+    support_message: str
+
+class ObsessionReportRequest(BaseModel):
+    conversation_history: List[Dict[str, Any]]
+    session_id: str
+
+class AnxietyHierarchyItem(BaseModel):
+    situation: str
+    score: int
+
+class ObsessionReportResponse(BaseModel):
+    session_id: str
+    obsession_type: str
+    anxiety_thoughts: str
+    compulsive_behaviors: str
+    anxiety_hierarchy: List[AnxietyHierarchyItem]
+
+class WeekInfo(BaseModel):
+    week: int
+    start_date: str
+    end_date: str
+
+class TrainingItem(BaseModel):
+    week: int
+    training_name: str
+    goal: str
+    content: str
+
+class TrainingExplanation(BaseModel):
+    title: str
+    description: str
+    when: str
+    instruction: str
+
+class ObsessionReport2Request(BaseModel):
+    conversation_history: List[Dict[str, Any]]
+    session_id: str
+
+class ObsessionReport2Response(BaseModel):
+    session_id: str
+    obsession_type: str
+    training_explanation: Dict[str, TrainingExplanation]
+    weeks: List[WeekInfo]
+    training_plan: List[TrainingItem]
