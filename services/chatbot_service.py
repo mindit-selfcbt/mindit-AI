@@ -271,8 +271,9 @@ class ChatbotService:
         
         2. 확인강박 (checking):
            - 문 잠금, 가스 끄기, 전자제품 확인
-           - 안전에 대한 반복적 확인
-           - 예: "문을 잠갔는지 계속 확인해요", "가스를 끄지 않았나 걱정돼요"
+           - 위치, 시간, 경로, 목적지 확인
+           - 안전, 정확성, 완료 여부에 대한 반복적 확인
+           - 예: "문을 잠갔는지 계속 확인해요", "가스를 끄지 않았나 걱정돼요", "내릴 역을 지나쳤는지 위치를 확인해야 해요", "늦을 것 같아서 시간을 계속 확인해요"
         
         3. 그 외 강박 (other):
            - 완벽주의, 순서/정리 강박, 수집 강박 등
@@ -310,6 +311,9 @@ class ChatbotService:
             
             response = self.llm.invoke(messages)
             category = response.content.strip().lower()
+            
+            # 따옴표 제거
+            category = category.replace('"', '').replace("'", "")
             
             # 유효한 카테고리인지 확인
             if category in ["contamination", "checking", "other"]:

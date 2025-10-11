@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
 from core.logging import setup_logging
 from app.obsession_router import router as obsession_router
+from app.response_prevention_router import router as response_prevention_router
 
 # 로깅 설정
 setup_logging()
@@ -25,6 +26,7 @@ app.add_middleware(
 
 # 라우터 등록
 app.include_router(obsession_router, prefix=settings.API_V1_STR)
+app.include_router(response_prevention_router, prefix=settings.API_V1_STR)
 
 @app.get("/")
 async def root():
